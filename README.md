@@ -56,7 +56,7 @@ Access API: `http://localhost:8000`
 
 ---
 
-## 3. Frontend Setup (Seperate terminal instance)
+## 3. Frontend Setup (Separate terminal instance)
 ```bash
 cd frontend
 npm install
