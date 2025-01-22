@@ -12,7 +12,15 @@ A local chatbot interface optimized for Apple Silicon (M-series) MacBooks with M
 
 ---
 
-## 1. Backend Setup
+## 1. Clone repo to local device
+
+```bash
+git clone https://github.com/matt0792/minstral-7b-local.git
+```
+
+---
+
+## 2. Backend Setup
 
 ```bash
 # Navigate to project root
@@ -48,7 +56,7 @@ Access API: `http://localhost:8000`
 
 ---
 
-## 2. Frontend Setup
+## 3. Frontend Setup
 ```bash
 cd frontend
 npm install
@@ -68,3 +76,7 @@ minstral-7b-local/
 │   └── model/          # Contains .gguf model
 └── frontend/           # React app
 ```
+
+---
+
+**Created with ♥ by Matt Thompson**  
