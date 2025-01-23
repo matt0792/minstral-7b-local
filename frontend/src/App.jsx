@@ -285,109 +285,125 @@ function App() {
     <Box minH="100vh" bg="gray.100" p={4}>
       <Box maxW="800px" mx="auto" p={4}>
         <VStack spacing={4} align="stretch">
-          {boxShown && (
-            <Box
-              position="relative"
-              borderWidth="1px"
-              borderRadius="lg"
-              p={4}
-              h="50vh"
-              overflowY="auto"
-              bgGradient="linear(to-tr, rgba(72, 5, 179, 0.92), rgba(107, 33, 168, 0.69))"
-              backdropFilter="blur(12px) saturate(160%)"
-              border="1px solid rgba(255, 255, 255, 0.15)"
-              boxShadow="0 8px 32px rgba(0, 0, 0, 0.18), 0px 0px 170px 70px rgba(90, 33, 182, 0.5)"
-              sx={{
-                // Chrome fix and blend mode
-                "@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none)":
-                  {
-                    WebkitBackdropFilter: "blur(12px) saturate(160%)",
-                  },
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
-                  zIndex: 0,
+          <Box
+            position="relative"
+            borderWidth="1px"
+            borderRadius="lg"
+            p={4}
+            h="50vh"
+            overflowY="auto"
+            bgGradient="linear(to-tr, rgba(72, 5, 179, 0.92), rgba(107, 33, 168, 0.69))"
+            backdropFilter="blur(12px) saturate(160%)"
+            border="1px solid rgba(255, 255, 255, 0.15)"
+            boxShadow="0 8px 32px rgba(0, 0, 0, 0.18), 0px 0px 170px 70px rgba(90, 33, 182, 0.5)"
+            sx={{
+              // Chrome fix and blend mode
+              "@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none)":
+                {
+                  WebkitBackdropFilter: "blur(12px) saturate(160%)",
                 },
-              }}
-            >
-              <Box position="relative" zIndex={2}>
-                {history.map((message, i) => (
-                  <Box
-                    key={i}
-                    alignSelf={
-                      message.role === "assistant" ? "flex-start" : "flex-end"
-                    }
-                    bg={
-                      message.role === "user"
-                        ? "black"
-                        : "rgba(255, 255, 255, 0.27)"
-                    }
-                    backdropFilter={
-                      message.role === "assistant" ? "blur(10px)" : undefined
-                    }
-                    border={
-                      message.role === "assistant"
-                        ? "1px solid rgba(255, 255, 255, 0.2)"
-                        : undefined
-                    }
-                    boxShadow={message.role === "assistant" ? "md" : undefined}
-                    color="white"
-                    p={3}
-                    borderRadius="md"
-                    mb={2}
-                    maxW="80%"
-                    w="fit-content"
-                    ml={message.role === "assistant" ? 0 : "auto"}
-                  >
-                    {message.role === "assistant" ? (
-                      <HStack spacing={2} alignItems="flex-start">
-                        <Icon
-                          as={FaStar}
-                          color="currentColor"
-                          boxSize={4}
-                          mt={1}
-                          mr="1"
-                        />
-                        <Text whiteSpace="pre-wrap">{message.content}</Text>
-                      </HStack>
-                    ) : (
-                      <Text whiteSpace="pre-wrap">{message.content}</Text>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-
-              {partialResponse && (
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                zIndex: 0,
+              },
+            }}
+          >
+            {!boxShown && (
+              <div
+                className="placeholder-text"
+                style={{
+                  fontWeight: "bold",
+                  color: "white",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  fontSize: "20px",
+                  opacity: "0.5",
+                }}
+              >
+                Type a message to begin
+              </div>
+            )}
+            <Box position="relative" zIndex={2}>
+              {history.map((message, i) => (
                 <Box
-                  alignSelf="flex-start"
-                  bg="rgba(255, 255, 255, 0.27)"
-                  backdropFilter="blur(10px)"
-                  boxShadow="md"
-                  border="1px solid rgba(255, 255, 255, 0.2)"
+                  key={i}
+                  alignSelf={
+                    message.role === "assistant" ? "flex-start" : "flex-end"
+                  }
+                  bg={
+                    message.role === "user"
+                      ? "black"
+                      : "rgba(255, 255, 255, 0.27)"
+                  }
+                  backdropFilter={
+                    message.role === "assistant" ? "blur(10px)" : undefined
+                  }
+                  border={
+                    message.role === "assistant"
+                      ? "1px solid rgba(255, 255, 255, 0.2)"
+                      : undefined
+                  }
+                  boxShadow={message.role === "assistant" ? "md" : undefined}
                   color="white"
                   p={3}
                   borderRadius="md"
                   mb={2}
                   maxW="80%"
                   w="fit-content"
+                  ml={message.role === "assistant" ? 0 : "auto"}
                 >
-                  <HStack spacing={2} alignItems="flex-start">
-                    <Icon
-                      as={FaStar}
-                      color="currentColor"
-                      boxSize={4}
-                      mt={1}
-                      mr="1"
-                    />
-                    <Text whiteSpace="pre-wrap">{partialResponse}</Text>
-                  </HStack>
+                  {message.role === "assistant" ? (
+                    <HStack spacing={2} alignItems="flex-start">
+                      <Icon
+                        as={FaStar}
+                        color="currentColor"
+                        boxSize={4}
+                        mt={1}
+                        mr="1"
+                      />
+                      <Text whiteSpace="pre-wrap">{message.content}</Text>
+                    </HStack>
+                  ) : (
+                    <Text whiteSpace="pre-wrap">{message.content}</Text>
+                  )}
                 </Box>
-              )}
-
-              <div ref={chatEndRef} />
+              ))}
             </Box>
-          )}
+
+            {partialResponse && (
+              <Box
+                alignSelf="flex-start"
+                bg="rgba(255, 255, 255, 0.27)"
+                backdropFilter="blur(10px)"
+                boxShadow="md"
+                border="1px solid rgba(255, 255, 255, 0.2)"
+                color="white"
+                p={3}
+                borderRadius="md"
+                mb={2}
+                maxW="80%"
+                w="fit-content"
+              >
+                <HStack spacing={2} alignItems="flex-start">
+                  <Icon
+                    as={FaStar}
+                    color="currentColor"
+                    boxSize={4}
+                    mt={1}
+                    mr="1"
+                  />
+                  <Text whiteSpace="pre-wrap">{partialResponse}</Text>
+                </HStack>
+              </Box>
+            )}
+
+            <div ref={chatEndRef} />
+          </Box>
 
           <form onSubmit={handleSubmit}>
             <HStack>
